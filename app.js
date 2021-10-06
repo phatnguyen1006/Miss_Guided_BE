@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 4000;
 // pipe
 const pipe = require("./pipeline/pipeline.js");
 
+// Routes
+const authenticationRoute = require('./routes/authentication.route');
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static('public'));
@@ -27,11 +30,13 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/pipe", pipe);
+app.get('/pipe', pipe);
 
-app.get("/", (req, res, next) => {
+app.get('/', (req, res, next) => {
     res.status(200).json({message: "Connected..."});
 });
+
+app.use('/me', authenticationRoute);
 
 app.listen(PORT, () => {
     console.log(`Application is running on port ${PORT}`);

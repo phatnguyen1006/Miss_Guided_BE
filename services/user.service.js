@@ -16,13 +16,17 @@ async function registerUser(data) {
 }
 
 async function loginUser(data) {
-    const userFound = await Users.findOne(data, (error) => {
-        if (!error) console.log("Find user successfully");
+    try {
+        const userFound = await Users.findOne(data) 
+
+        if (userFound) console.log("Find user successfully");
         
         else console.log("Failed to find user");
-    });
 
-    return userFound;
+        return userFound;
+    } catch(err) {
+        console.log("Error in login user: ", error.message);
+    }
 }
 
 module.exports = {
