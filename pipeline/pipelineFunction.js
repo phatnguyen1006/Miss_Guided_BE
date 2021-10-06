@@ -14,7 +14,7 @@ pipe = async (req, res) => {
     var description = "";
     var images = [];
 
-    request(req.body.url, function (error, response, body) {
+    request(req.body.url, async function (error, response, body) {
         if (error) {
             console.log(error);
             res.status(200).json({
@@ -46,6 +46,7 @@ pipe = async (req, res) => {
             });
 
             salePriceds.each(function (i, e) {
+                console.log($(this).text());
                 salePrice = $(this).text();
             });
 
@@ -59,32 +60,32 @@ pipe = async (req, res) => {
                 images.push(img.children[0].children[0].children[0]['attribs']['srcset'].split(",")[3].trim().split(" ")[0]);
             });
         }
-    });
 
-    let data = {
-        "name": name,
-        "categories": categories,
-        "price": price,
-        "salePrice": salePrice,
-        "description": description,
-        "sizes": sizes,
-        "images": images,
-    }
+        let data = {
+            "name": name,
+            "categories": categories,
+            "price": price,
+            "salePrice": salePrice,
+            "description": description,
+            "sizes": sizes,
+            "images": images,
+        }
+        
+        const check = await createProduct(data);
     
-    const check = await createProduct(data);
-
-    if ( check == 200) {
-        res.render('pipeline', {
-            "message": "Submitted!! Another submit?"
-        });
-        return;
-    }
-    else {
-        res.render('pipeline', {
-            "message": "Failed!!! Try again!!!"
-        });
-        return;
-    }
+        if ( check == 200) {
+            res.render('pipeline', {
+                "message": "Submitted!! Another submit?"
+            });
+            return;
+        }
+        else {
+            res.render('pipeline', {
+                "message": "Failed!!! Try again!!!"
+            });
+            return;
+        }
+    });
 }
 
 module.exports = pipe;
