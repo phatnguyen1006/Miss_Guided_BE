@@ -1,4 +1,5 @@
 const Users = require("../models/user.model");
+const { compare } = require("../helper/comparePassword");
 
 async function registerUser(data) {
     try {
@@ -18,15 +19,18 @@ async function registerUser(data) {
 
 async function loginUser(data) {
     try {
-        const userFound = await Users.findOne(data) 
+        const userFound = await Users.findOne({ email: data.email });
 
-        if (userFound) console.log("Find user successfully");
-        
-        else console.log("Failed to find user");
+        if (userFound) {
+            return compare(data.password, userFound.password) ? 200 : 401;
+        }
+        else {
+            return null;
+        }
 
         return userFound;
     } catch(err) {
-        console.log("Error in login user: ", error.message);
+        console.log("Error in login user: ", err.message);
     }
 }
 
@@ -58,9 +62,24 @@ async function updateCart(email, newProductId) {
     }
 }
 
+async function updateWishlist(email, newProductId) {
+    // If Cart [] || Cart !- []
+    try {
+        const user = await Users.findOne({ email: email });
+
+        user.wishlist.push(newProductId);
+        await user.save();
+
+        return "Add to Wishlist Successfully !!!";
+    } catch (err) {
+        return null;
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
     updateUser,
     updateCart,
+    updateWishlist,
 };

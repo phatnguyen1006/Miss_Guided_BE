@@ -30,16 +30,22 @@ module.exports.postRegister = async (req, res) => {
 module.exports.postLogin = async (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
+
+    if (!password) return res.status(401).json({ "message": "Please enterpassword" });
+
+    let data = { email, password };
     
-    let findUser = await userService.loginUser({email: email});
+    let findUser = await userService.loginUser(data);
     
     if (findUser) {
-        let JSONUser = JSON.stringify(findUser);
-        res.status(200).json(JSONUser);
-        return;
+        // return res.status(200).json({ "message": login });
+        if (findUser == 200) {
+            return res.status(200).json({ "message": "Login Successfully !!!" });
+        } else if (findUser == 401) {
+            return res.status(401).json({ "message": "Wrong password !!!" });
+        }
     } else {
-        res.status(401).json('');
-        return;
+        return res.status(401).json({ "message": "Fail to login" });
     }
 }
 
@@ -56,23 +62,13 @@ module.exports.addToCart = async (req, res) => {
 }
 
 module.exports.addToWishlist = async (req, res) => {
-    var wishlist = req.body.wishlist 
-    wishlist.push(req.body.newProduct);
+    const { email, newProduct } = req.body;
+
+    const onUpdateWishlist = await userService.updateWishlist(email, newProduct);
     
-    var email = req.body.email;
-
-    const UserData = {
-        wishlist: wishlist,
-    };
-
-    const updateUser = userSercvice.updateUser(email, UserData);
-
-    if (updateUser) {
-        const JSONUserData = JSON.stringify(updateUser);
-        console.log("Update user successfully");
-        res.status(200).json(JSONUserData);
+    if (onUpdateWishlist) {
+        res.status(200).json({ "message": onUpdateWishlist });
     } else {
-        console.log("Update user failed");
-        res.status(401).json('');
+        res.status(400).json({ "message": "Add to cart failed !!!" });
     }
 }
