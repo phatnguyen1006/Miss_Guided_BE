@@ -33,7 +33,7 @@ pipe = (req, res) => {
             name = nameds[0]["children"][0].data ?? "";
 
             categoryds.each(function (i, e) {
-                if (e["children"][1]["attribs"].title && i != 0) {
+                if (e["children"][1]["attribs"]?.title && i != 0) {
                     // console.log(e["children"][1]["attribs"].title);
                     categories.push(e["children"][1]["attribs"].title);
                 }
