@@ -26,7 +26,25 @@ async function findOneProduct(data) {
     }
 };
 
+async function findPagination(page) {
+    let perPage = 8;
+    
+    try {
+        const result = await Products
+                                .find()
+                                .skip((perPage * page) - perPage) //skip every value 0
+                                .limit(perPage)
+        
+        return result;
+    } catch(err) {
+        console.log("Get pagination failed");
+        throw err;
+    }
+}
+
+
 module.exports = {
     findAllProducts,
     findOneProduct,
+    findPagination,
 };
