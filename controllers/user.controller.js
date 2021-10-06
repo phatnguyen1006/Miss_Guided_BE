@@ -6,7 +6,10 @@ module.exports.postRegister = async (req, res) => {
         lastName: req.body.lastName, 
         email: req.body.email, 
         password: req.body.password,
-    }
+        wishlist: req.body.wishlist,
+        cart: req.body.cart,
+        dob: req.body.dob,
+    };
 
     const isEmailExisted = await userService.loginUser({email: req.body.email});
     if (isEmailExisted) {

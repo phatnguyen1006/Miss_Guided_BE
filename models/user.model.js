@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema(
         email: {
             type: String,
             required: true,
+            unique: true,
             default: "Unknown Email",
             maxLenght: 50,
         }, 
@@ -25,6 +26,18 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: "Unknown Password",
             maxLenght: 50,
+        }, 
+        wishlist: {
+            type: [String],
+            default: [""],
+        }, 
+        cart: {
+            type: [String],
+            default: [""],
+        }, 
+        dob: {
+            type: String,
+            default:"1/1/1980",
         }
     }
 );

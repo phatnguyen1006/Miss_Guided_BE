@@ -16,6 +16,7 @@ const pipe = require("./pipeline/pipeline.js");
 
 // Routes
 const authenticationRoute = require('./routes/authentication.route');
+const productRoute = require('./routes/product.route');
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -37,6 +38,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/me', authenticationRoute);
+app.use('/product', productRoute);
 
 app.listen(PORT, () => {
     console.log(`Application is running on port ${PORT}`);
