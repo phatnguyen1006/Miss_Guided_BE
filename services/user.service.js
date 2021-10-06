@@ -29,7 +29,22 @@ async function loginUser(data) {
     }
 }
 
+async function updateUser(email, data) {
+    const userUpdate = await Users.findOneAndUpdate({
+        email: email,
+    }, data, {
+        new: true
+    }, (error) => {
+        if(!err) console.log("Update user successful!");
+        
+        else console.log("Udate user failed!");
+    });
+
+    return userUpdate;
+}
+
 module.exports = {
     registerUser,
     loginUser,
+    updateUser,
 };
