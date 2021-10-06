@@ -7,7 +7,7 @@ const pipe = require("./pipelineFunction");
 
 router.get("/", function (req, res) {
     res.render('pipeline', {
-
+        "message": "Welcome to MissGuided Server"
     });
 });
 
