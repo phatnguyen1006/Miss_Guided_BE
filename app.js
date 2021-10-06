@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const connectDB = require("./config/db-connect");
+connectDB();
 
 // Lib
 const bodyParser = require('body-parser');
