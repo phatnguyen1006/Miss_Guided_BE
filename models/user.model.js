@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
             default: "Unknown FirstName",
             maxLenght: 50,
         }, 
-        lasttName: {
+        lastName: {
             type: String,
             required: true,
             default: "Unknown Lastname",
@@ -29,11 +29,9 @@ const userSchema = new mongoose.Schema(
         }, 
         wishlist: {
             type: [String],
-            default: [""],
         }, 
         cart: {
             type: [String],
-            default: [""],
         }, 
         dob: {
             type: String,
