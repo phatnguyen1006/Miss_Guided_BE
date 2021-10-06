@@ -44,24 +44,14 @@ module.exports.postLogin = async (req, res) => {
 }
 
 module.exports.addToCart = async (req, res) => {
-    var cart = req.body.cart 
-    cart.push(req.body.newProduct);
+    const { email, newProduct } = req.body;
+
+    const onUpdateCart = await userService.updateCart(email, newProduct);
     
-    var email = req.body.email;
-
-    const UserData = {
-        cart: cart,
-    };
-
-    const updateUser = userSercvice.updateUser(email, UserData);
-
-    if (updateUser) {
-        const JSONUserData = JSON.stringify(updateUser);
-        console.log("Update user successfully");
-        res.status(200).json(JSONUserData);
+    if (onUpdateCart) {
+        res.status(200).json({ "message": onUpdateCart });
     } else {
-        console.log("Update user failed");
-        res.status(401).json('');
+        res.status(400).json({ "message": "Add to cart failed !!!" });
     }
 }
 

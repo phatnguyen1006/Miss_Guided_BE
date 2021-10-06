@@ -43,8 +43,23 @@ async function updateUser(email, data) {
     return userUpdate;
 }
 
+async function updateCart(email, newProductId) {
+    // If Cart [] || Cart !- []
+    try {
+        const user = await Users.findOne({ email: email });
+
+        user.cart.push(newProductId);
+        await user.save();
+
+        return "Add to Cart Successfully !!!";
+    } catch (err) {
+        return null;
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
     updateUser,
+    updateCart,
 };
