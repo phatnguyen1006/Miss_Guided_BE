@@ -1,7 +1,9 @@
 const request = require("request");
 const cheerio = require("cheerio");
 
-pipe = (req, res) => {
+const createProduct = require("./pipelineService");
+
+pipe = async (req, res) => {
     if (!req.body.url) return;
 
     var name = "";
@@ -56,24 +58,33 @@ pipe = (req, res) => {
             imgds[0]["children"]?.forEach(img => {
                 images.push(img.children[0].children[0].children[0]['attribs']['srcset'].split(",")[3].trim().split(" ")[0]);
             });
-
-            let data = {
-                "name": name,
-                "categories": categories,
-                "price": price,
-                "salePrice": salePrice,
-                "description": description,
-                "sizes": sizes,
-                "img": images,
-            }
-
-            console.log(data);
-
-            res.render('pipeline', {
-                "message": "Submitted!! Another submit?"
-            });
         }
     });
+
+    let data = {
+        "name": name,
+        "categories": categories,
+        "price": price,
+        "salePrice": salePrice,
+        "description": description,
+        "sizes": sizes,
+        "img": images,
+    }
+    
+    const check = await createProduct(data);
+
+    if ( check == 200) {
+        res.render('pipeline', {
+            "message": "Submitted!! Another submit?"
+        });
+        return;
+    }
+    else {
+        res.render('pipeline', {
+            "message": "Failed!!! Try again!!!"
+        });
+        return;
+    }
 }
 
 module.exports = pipe;
