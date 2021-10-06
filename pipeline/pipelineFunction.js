@@ -68,7 +68,7 @@ pipe = async (req, res) => {
         "salePrice": salePrice,
         "description": description,
         "sizes": sizes,
-        "img": images,
+        "images": images,
     }
     
     const check = await createProduct(data);
