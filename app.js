@@ -4,15 +4,22 @@ const connectDB = require("./config/db-connect");
 connectDB();
 
 // Lib
+const path = require("path");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const hbs = require('express-handlebars');
 
 require('dotenv').config(); // to use .env file
 const PORT = process.env.PORT || 4000;
 
 // pipe
-const pipe = require("./pipeline/pipeline.js");
+const pipeRoute = require("./pipeline/pipeline.js");
+
+// template engine
+app.engine('handlebars', hbs({extname: ".hbs"})); //install view
+app.set('view engine', "handlebars");
+app.set('views', path.join(__dirname, './views')); // view
 
 // Routes
 const authenticationRoute = require('./routes/authentication.route');
@@ -32,7 +39,7 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/pipe', pipe);
+app.use('/pipe', pipeRoute);
 
 app.get('/', (req, res, next) => {
     res.status(200).json({message: "Connected..."});

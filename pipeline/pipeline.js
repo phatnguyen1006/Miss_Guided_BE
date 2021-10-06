@@ -1,25 +1,16 @@
-const request = require("request");
-const cheerio = require("cheerio");
+const express = require("express");
+const router = express.Router();
 
-pipe = (req, res) => {
-    request(url, function (error, response, body) {
-        if (error) {
-            console.log(error);
-            res.status(200).json({
-                message: "Error"
-            });
-        }
-        else {
-            $ = cheerio.load(body);
-            var ds = $(body).find("picture.styles__active--2pO1j styles__image--2YIO4 styles__previous--3SkPy");
-            ds.each(function (i, e) {
-                console.log($(this).text());
-            });
+require("dotenv").config();
 
-            res.status(200).json({ "data": "ds" });
-        }
+const pipe = require("./pipelineFunction");
+
+router.get("/", function (req, res) {
+    res.render('pipeline', {
+        "message": "Welcome to MissGuided Server"
     });
-}
+});
 
+router.post("/", pipe);
 
-module.exports = pipe
+module.exports = router;

@@ -1,0 +1,22 @@
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js"></script> 
+</script>
+	 <div id='mainDiv'>
+	<h2>{{ message }}</h2>
+	<div id='formDiv'>
+		<form method="POST" action="/pipe">
+			<fieldset>
+				<legend>Insert Url Here</legend>
+				<table>
+					<tr>
+						<td><label for='urlInput'>Page Url</label></td>
+						<td><input type='text' name="url" id='urlInput'/></td>
+						<td colspan='2'><input type='submit' id='submitButton'/></td>
+					</tr>
+				</table>
+			</fieldset>
+		</form>
+	</div>
+	<div id='detailsBox'></div>
+</div>
+
