@@ -33,9 +33,9 @@ const productSchema = new mongoose.Schema(
             type: String, 
             default: "This product has got any desciption",
         }, 
-        category: {
-            type: String, 
-            default: "Unknown category",
+        categories: {
+            type: [String], 
+            default: ["Unknown category"],
         },
     }
 );

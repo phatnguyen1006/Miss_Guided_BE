@@ -34,15 +34,55 @@ module.exports.postLogin = async (req, res) => {
     let findUser = await userService.loginUser({email: email});
     
     if (findUser) {
-        if (findUser.password != password) {
-            res.status(401).json({"isSuccess": false});
-        } else {
-            res.status(200).json({"isSuccess": true});
-        }
-
+        let JSONUser = JSON.stringify(findUser);
+        res.status(200).json(JSONUser);
         return;
     } else {
-        res.status(200).json({"isSuccess": false});
+        res.status(401).json('');
         return;
+    }
+}
+
+module.exports.addToCart = async (req, res) => {
+    var cart = req.body.cart 
+    cart.push(req.body.newProduct);
+    
+    var email = req.body.email;
+
+    const UserData = {
+        cart: cart,
+    };
+
+    const updateUser = userSercvice.updateUser(email, UserData);
+
+    if (updateUser) {
+        const JSONUserData = JSON.stringify(updateUser);
+        console.log("Update user successfully");
+        res.status(200).json(JSONUserData);
+    } else {
+        console.log("Update user failed");
+        res.status(401).json('');
+    }
+}
+
+module.exports.addToWishlist = async (req, res) => {
+    var wishlist = req.body.wishlist 
+    wishlist.push(req.body.newProduct);
+    
+    var email = req.body.email;
+
+    const UserData = {
+        wishlist: wishlist,
+    };
+
+    const updateUser = userSercvice.updateUser(email, UserData);
+
+    if (updateUser) {
+        const JSONUserData = JSON.stringify(updateUser);
+        console.log("Update user successfully");
+        res.status(200).json(JSONUserData);
+    } else {
+        console.log("Update user failed");
+        res.status(401).json('');
     }
 }
