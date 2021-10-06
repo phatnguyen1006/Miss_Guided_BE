@@ -28,12 +28,10 @@ const userSchema = new mongoose.Schema(
             maxLenght: 50,
         }, 
         wishlist: {
-            type: [String],
-            default: [""],
+            type: [String],            
         }, 
         cart: {
             type: [String],
-            default: [""],
         }, 
         dob: {
             type: String,

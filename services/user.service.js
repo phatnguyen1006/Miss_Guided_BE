@@ -12,6 +12,7 @@ async function registerUser(data) {
         return saveUser;
     } catch (error) {
         console.log("Error in creating user: ", error.message);
+        throw error;
     }
 }
 

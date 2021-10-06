@@ -13,7 +13,7 @@ module.exports.postRegister = async (req, res) => {
 
     const isEmailExisted = await userService.loginUser({email: req.body.email});
     if (isEmailExisted) {
-        res.status(401).json({"isSuccess": false});
+        res.status(401).json({"message": "Exsisted Email !!"});
         return;
     }
 
@@ -21,9 +21,9 @@ module.exports.postRegister = async (req, res) => {
     const registeredUser = await userService.registerUser(UserData);
 
     if (registeredUser) {
-        res.status(200).json({"isSuccess": true});
+        res.status(200).json({"message": "Register Successfully !!!"});
     } else {
-        res.status(400).json({"isSuccess": false});
+        res.status(400).json({"message": "Fail to register!!!"});
     }
 }
 
