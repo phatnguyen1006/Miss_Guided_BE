@@ -46,7 +46,7 @@ pipe = async (req, res) => {
             });
 
             salePriceds.each(function (i, e) {
-                console.log($(this).text());
+                //console.log($(this).text());
                 salePrice = $(this).text();
             });
 
