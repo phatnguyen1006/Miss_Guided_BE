@@ -31,7 +31,7 @@ module.exports.getPagination = async (req, res) => {
 
     if (!products) return res.status(400).json({"message": "Faild to get pagination products"});
     else {
-        const JSONProducts = JSON.stringify(products);
-        return res.status(200).json(JSONProducts);
+        // const JSONProducts = JSON.stringify(products);
+        return res.status(200).json({ "products": products });
     }
 }
