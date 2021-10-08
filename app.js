@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/pipe', pipeRoute);
 
 app.get('/', (req, res, next) => {
-    res.status(200).json({message: "Connected..."});
+    res.status(200).json({message: "Connected... Go to secret page!!!"});
 });
 
 app.use('/me', authenticationRoute);
