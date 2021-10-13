@@ -4,8 +4,9 @@ module.exports.getAllProducts = async (req, res) => {
     const allProducts = await Products.findAllProducts();
 
     if (allProducts) {
-        const JSONProducts = JSON.stringify(allProducts);
-        return res.status(200).json(JSONProducts);
+        // const JSONProducts = JSON.stringify(allProducts);
+        // return res.status(200).json(JSONProducts);
+        return res.status(200).json({ "products": allProducts });
     } else {
         return res.status(400).json({"message": "Failed to get all products"});
     }
@@ -17,8 +18,9 @@ module.exports.getOneProduct = async (req, res) => {
     const findProduct = await Products.findOneProduct({_id: id});
     
     if (findProduct) {
-        const JSONProduct = JSON.stringify(findProduct);
-        res.status(200).json(JSONProduct);
+        // const JSONProduct = JSON.stringify(findProduct);
+        // res.status(200).json(JSONProduct);
+        return res.status(200).json({ "products": findProduct });
     } else {
         res.status(401).json({"message": "No product matches"});
     }
