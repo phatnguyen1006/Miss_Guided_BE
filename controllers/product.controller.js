@@ -42,7 +42,7 @@ module.exports.getPagination = async (req, res) => {
 };
 
 module.exports.searchProduct = async (req, res) => {
-  const { q } = req.query;
+  const { q, page } = req.query;
   console.log(q);
 
   if (!q) {
@@ -51,7 +51,7 @@ module.exports.searchProduct = async (req, res) => {
     });
   }
 
-  const result = await Products.searchByText(q);
+  const result = await Products.searchByText(page, q);
 
   if (!result) {
     return res.status(404).json({
@@ -67,12 +67,13 @@ module.exports.searchProduct = async (req, res) => {
 
 module.exports.filters = async (req, res, next) => {
   //   const { q } = req.query;
+  const page = req.params.page;
 
   if (!req.query) {
     next();
   }
 
-  const result = await Products.filterByAttributes(req.query);
+  const result = await Products.filterByAttributes(page, req.query);
 
   if (!result) {
     return res.status(404).json({
