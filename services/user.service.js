@@ -69,7 +69,7 @@ async function updateCart(email, newProductId) {
         user.cart.push(newProductId);
         await user.save();
 
-        return "Add to Cart Successfully !!!";
+        return user;
     } catch (err) {
         return null;
     }
@@ -83,11 +83,32 @@ async function updateWishlist(email, newProductId) {
         user.wishlist.push(newProductId);
         await user.save();
 
-        return "Add to Wishlist Successfully !!!";
+        return user;
     } catch (err) {
         return null;
     }
 }
+
+async function removeFromWishList(email, productId) {
+    try {
+        const user = await Users.findOne({ email: email });
+
+        removeElement(user.wishlist, productId);
+        await user.save();
+
+        return user;
+    } catch (err) {
+        return null;
+    }
+}
+
+function removeElement(array, elem) {
+    var index = array.indexOf(elem);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+}
+
 
 module.exports = {
     registerUser,
@@ -95,5 +116,6 @@ module.exports = {
     updateUser,
     updateCart,
     updateWishlist,
+    removeFromWishList,
     findUser,
 };
