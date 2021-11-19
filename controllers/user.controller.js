@@ -62,6 +62,18 @@ module.exports.findUser = async (req, res) => {
   }
 };
 
+module.exports.getCart = async (req, res) => {
+  const { user } = req.params;
+
+  const cart = await userService.getCart(user);
+
+  if (cart) {
+    res.status(200).json({ cart: cart });
+  } else {
+    res.status(400).json({ message: "Add to cart failed !!!" });
+  }
+};
+
 module.exports.addToCart = async (req, res) => {
   const { email, newProduct } = req.body;
 

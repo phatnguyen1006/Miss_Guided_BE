@@ -63,6 +63,21 @@ async function findUser(email) {
   }
 }
 
+async function getCart(email) {
+  // If Cart [] || Cart !- []
+  try {
+    const user = await Users.findOne({ email: email });
+
+    if (user) {
+      return user.cart;
+    }
+
+    return null;
+  } catch (err) {
+    return null;
+  }
+}
+
 async function updateCart(email, newProductId) {
   // If Cart [] || Cart !- []
   try {
