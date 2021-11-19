@@ -21,7 +21,7 @@ module.exports.postRegister = async (req, res) => {
     const registeredUser = await userService.registerUser(UserData);
 
     if (registeredUser) {
-        res.status(200).json({"message": "Register Successfully !!!"});
+        res.status(200).json({user: registeredUser});
     } else {
         res.status(400).json({"message": "Fail to register!!!"});
     }
@@ -40,7 +40,7 @@ module.exports.postLogin = async (req, res) => {
     if (findUser) {
         // return res.status(200).json({ "message": login });
         if (findUser == 200) {
-            return res.status(200).json({ "message": "Login Successfully !!!" });
+            return res.status(200).json({ user: findUser});
         } else if (findUser == 401) {
             return res.status(401).json({ "message": "Wrong password !!!" });
         }
