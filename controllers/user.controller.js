@@ -49,6 +49,20 @@ module.exports.postLogin = async (req, res) => {
     }
 }
 
+module.exports.findUser = async (req, res) => {
+    var email = req.body.email;
+
+    const userFound = await userService.findUser(email);
+
+    if (userFound) {
+        return res.status(200).json({ user: userFound });
+    } else {
+        return res
+      .status(400)
+      .json({ message: "Faild to find user" });
+    }
+}
+
 module.exports.addToCart = async (req, res) => {
     const { email, newProduct } = req.body;
 

@@ -27,8 +27,6 @@ async function loginUser(data) {
         else {
             return null;
         }
-
-        return userFound;
     } catch(err) {
         console.log("Error in login user: ", err.message);
     }
@@ -46,6 +44,21 @@ async function updateUser(email, data) {
     });
 
     return userUpdate;
+}
+
+async function findUser(email) {
+    try {
+        const userFound = await Users.findOne({ email: email });
+
+        if (userFound) {
+            return userFound;
+        }
+        else {
+            return null;
+        }
+    } catch(err) {
+        console.log("Error in login user: ", err.message);
+    }
 }
 
 async function updateCart(email, newProductId) {
@@ -104,4 +117,5 @@ module.exports = {
     updateCart,
     updateWishlist,
     removeFromWishList,
+    findUser,
 };
