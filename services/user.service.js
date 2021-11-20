@@ -1,4 +1,5 @@
 const Users = require("../models/user.model");
+const productServices = require("../services/product.service");
 const { compare } = require("../helper/comparePassword");
 
 async function registerUser(data) {
@@ -68,11 +69,11 @@ async function getCart(email) {
   try {
     const user = await Users.findOne({ email: email });
 
-    if (user) {
-      return user.cart;
+    if (!user) {
+      return null;
     }
 
-    return null;
+    return user.cart;
   } catch (err) {
     return null;
   }
@@ -148,6 +149,7 @@ module.exports = {
   registerUser,
   loginUser,
   updateUser,
+  getCart,
   updateCart,
   updateWishlist,
   removeFromWishList,

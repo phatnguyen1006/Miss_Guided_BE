@@ -93,6 +93,27 @@ async function filterByAttributes(page, data) {
   }
 }
 
+async function fetchProductInCart(cart) {
+  var perPage = 8;
+  try {
+    // .skip(perPage * page - perPage) //skip every value 0
+    // .limit(perPage);
+    // var productList = [];
+    let productList = await cart.map(async (c) => {
+      var result = await Products.findOne({ _id: c });
+      return result;
+      // await productList.push(result);
+    });
+
+    return Promise.all(productList).then((res) => {
+      return res;
+    });
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 module.exports = {
   findAllProducts,
   findOneProduct,
@@ -100,4 +121,5 @@ module.exports = {
   findPaginationSwipe,
   searchByText,
   filterByAttributes,
+  fetchProductInCart,
 };

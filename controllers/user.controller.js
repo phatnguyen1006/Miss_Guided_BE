@@ -1,4 +1,5 @@
 const userService = require("../services/user.service");
+const productService = require("../services/product.service");
 
 module.exports.postRegister = async (req, res) => {
   const UserData = {
@@ -66,11 +67,12 @@ module.exports.getCart = async (req, res) => {
   const { user } = req.params;
 
   const cart = await userService.getCart(user);
+  const userCart = await productService.fetchProductInCart(cart);
 
-  if (cart) {
-    res.status(200).json({ cart: cart });
+  if (userCart) {
+    res.status(200).json({ cart: userCart });
   } else {
-    res.status(400).json({ message: "Add to cart failed !!!" });
+    res.status(400).json({ message: "get cart failed !!!" });
   }
 };
 
