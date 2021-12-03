@@ -110,10 +110,20 @@ async function updateWishlist(email, newProductId) {
 async function removeFromCart(email, productId) {
   try {
     const user = await Users.findOne({ email: email }).lean();
+    let cart = user.cart.filter((c) => c == productId);
+    console.log(cart);
 
-    user.cart = user.cart.filter((c) => c != productId);
-
-    var result = await user.save();
+    if (user) {
+      var result = await Users.findOneAndUpdate(
+        { email: email },
+        {
+          cart: cart,
+        },
+        {
+          new: true,
+        }
+      );
+    }
 
     if (result) {
       return true;
@@ -121,6 +131,7 @@ async function removeFromCart(email, productId) {
       return null;
     }
   } catch (err) {
+    console.log(err);
     return null;
   }
 }

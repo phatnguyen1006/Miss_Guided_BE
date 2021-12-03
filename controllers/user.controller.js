@@ -70,13 +70,11 @@ module.exports.getCart = async (req, res) => {
   const userCart = await productService.fetchProductInCart(cart);
 
   if (userCart) {
-    res
-      .status(200)
-      .json({
-        cart: userCart.res,
-        total: userCart.total,
-        pLength: userCart.pLength,
-      });
+    res.status(200).json({
+      cart: userCart.res,
+      total: userCart.total,
+      pLength: userCart.pLength,
+    });
   } else {
     res.status(400).json({ message: "get cart failed !!!" });
   }
