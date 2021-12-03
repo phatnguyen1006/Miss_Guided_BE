@@ -33,6 +33,9 @@ const userSchema = new mongoose.Schema(
         cart: {
             type: [String],
         }, 
+        ordered: {
+            type: [String],
+        },
         dob: {
             type: String,
             default:"1/1/1980",

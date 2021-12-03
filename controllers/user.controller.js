@@ -117,3 +117,30 @@ module.exports.addToWishlist = async (req, res) => {
     res.status(400).json({ message: "Add to cart failed !!!" });
   }
 };
+
+module.exports.addToOrdered = async (req, res) => { 
+  const { email, newProduct } = req.body;
+
+  const onAddToOrdered = await userService.addToOrderHistory(email, newProduct);
+
+  if (onAddToOrdered) {
+    res.status(200).json({ message: onAddToOrdered });
+  } else {
+    res.status(400).json({ message: "Add to cart failed !!!" });
+  }
+}
+
+module.exports.getOrdered = async (req, res) => { 
+  const email = req.params.email;
+
+  const user = await userService.findUser(email);
+  let result = [];
+
+  for (let productId of user.ordered) {
+      const product = await productService.findOneProduct({_id: productId});
+      result.push(product);
+  }
+
+  res.status(200).json({products: result});
+}
+
