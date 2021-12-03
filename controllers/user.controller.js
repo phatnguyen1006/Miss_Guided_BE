@@ -119,9 +119,10 @@ module.exports.addToWishlist = async (req, res) => {
 };
 
 module.exports.addToOrdered = async (req, res) => { 
-  const { email, newProduct } = req.body;
-
-  const onAddToOrdered = await userService.addToOrderHistory(email, newProduct);
+  const email = req.body.email;
+  const productId = req.body.productId;
+  
+  const onAddToOrdered = await userService.addToOrderHistory(email, productId);
 
   if (onAddToOrdered) {
     res.status(200).json({ message: onAddToOrdered });
