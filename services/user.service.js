@@ -149,6 +149,20 @@ async function removeFromWishList(email, productId) {
   }
 }
 
+async function addToOrderHistory(email, newProductId) {
+  // If Cart [] || Cart !- []
+  try {
+    const user = await Users.findOne({ email: email });
+
+    user.ordered.push(newProductId);
+    await user.save();
+
+    return user;
+  } catch (err) {
+    return null;
+  }
+}
+
 function removeElement(array, elem) {
   var index = array.indexOf(elem);
   if (index > -1) {
@@ -166,4 +180,5 @@ module.exports = {
   removeFromWishList,
   findUser,
   removeFromCart,
+  addToOrderHistory,
 };

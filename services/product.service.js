@@ -27,7 +27,7 @@ async function findOneProduct(data) {
 }
 
 async function findPagination(page) {
-  let perPage = 8;
+  let perPage = 20;
 
   try {
     const result = await Products.find()
@@ -57,7 +57,7 @@ async function findPaginationSwipe(page) {
 }
 
 async function searchByText(page, q) {
-  var perPage = 8;
+  var perPage = 20;
   try {
     const result = await Products.find({ name: RegExp(q, "i") })
       .skip(perPage * page - perPage) //skip every value 0
@@ -78,7 +78,7 @@ async function searchByText(page, q) {
 }
 
 async function filterByAttributes(page, data) {
-  var perPage = 8;
+  var perPage = 20;
   try {
     const result = await Products.find(data)
       .skip(perPage * page - perPage) //skip every value 0
@@ -94,7 +94,7 @@ async function filterByAttributes(page, data) {
 }
 
 async function fetchProductInCart(cart) {
-  var perPage = 8;
+  var perPage = 20;
   var total = 0;
   try {
     // .skip(perPage * page - perPage) //skip every value 0

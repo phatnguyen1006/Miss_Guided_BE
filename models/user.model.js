@@ -4,27 +4,23 @@ const userSchema = new mongoose.Schema(
     {
         firstName: {
             type: String,
-            required: true,
-            default: "Unknown FirstName",
+            required: true,  
             maxLenght: 50,
         }, 
         lastName: {
             type: String,
             required: true,
-            default: "Unknown Lastname",
             maxLenght: 50,
         },
         email: {
             type: String,
             required: true,
             unique: true,
-            default: "Unknown Email",
             maxLenght: 50,
         }, 
         password: {
             type: String,
             required: true,
-            default: "Unknown Password",
             maxLenght: 50,
         }, 
         wishlist: {
@@ -33,6 +29,9 @@ const userSchema = new mongoose.Schema(
         cart: {
             type: [String],
         }, 
+        ordered: {
+            type: [String],
+        },
         dob: {
             type: String,
             default:"1/1/1980",
