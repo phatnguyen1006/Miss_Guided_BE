@@ -107,10 +107,19 @@ async function updateWishlist(email, newProductId) {
   }
 }
 
-async function removeFromCart(email, productId) {
+async function removeFromCart(email, productID) {
   try {
-    const user = await Users.findOne({ email: email }).lean();
-    let cart = user.cart.filter((c) => c == productId);
+    let cart = [];
+    const user = await Users.findOne({ email: email })
+      .lean()
+      .then((res) => {
+        if (res && res.cart != []) {
+          cart = res.cart.filter((c) => c != productID);
+          return true;
+        } else {
+          return false;
+        }
+      });
 
     if (user) {
       var result = await Users.findOneAndUpdate(
@@ -122,13 +131,15 @@ async function removeFromCart(email, productId) {
           new: true,
         }
       );
+
+      if (result) {
+        return true;
+      } else {
+        return null;
+      }
     }
 
-    if (result) {
-      return true;
-    } else {
-      return null;
-    }
+    return false;
   } catch (err) {
     console.log(err);
     return null;

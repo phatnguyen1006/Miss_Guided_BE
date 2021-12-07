@@ -82,9 +82,9 @@ module.exports.getCart = async (req, res) => {
 
 module.exports.addToCart = async (req, res) => {
   const email = req.body.email;
-  const productId = req.body.productId;
+  const productID = req.body.productID;
 
-  const onUpdateCart = await userService.updateCart(email, productId);
+  const onUpdateCart = await userService.updateCart(email, productID);
 
   if (onUpdateCart) {
     res.status(200).json({ message: onUpdateCart });

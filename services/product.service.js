@@ -100,26 +100,26 @@ async function fetchProductInCart(cart) {
     // .skip(perPage * page - perPage) //skip every value 0
     // .limit(perPage);
     // var productList = [];
-    if (cart) {
-      let productList = await cart.map(async (c) => {
-        var result = await Products.findOne({ _id: c });
-        if (result.salePrice) {
-          total += parseFloat(
-            result.salePrice.slice(0, result.salePrice.length - 1)
-          );
-        } else {
-          total += parseFloat(result.price.slice(0, result.price.length - 1));
-        }
-        return result;
-        // await productList.push(result);
-      });
-
-      return Promise.all(productList).then((res) => {
-        return { res, total: total.toString() + ",00€", pLength: res.length };
-      });
-    } else {
-      return { res: [], total: "0,00€", pLength: 0 };
+    if (!cart) {
+      return null;
     }
+
+    let productList = await cart.map(async (c) => {
+      var result = await Products.findOne({ _id: c });
+      if (result.salePrice) {
+        total += parseFloat(
+          result.salePrice.slice(0, result.salePrice.length - 1)
+        );
+      } else {
+        total += parseFloat(result.price.slice(0, result.price.length - 1));
+      }
+      return result;
+      // await productList.push(result);
+    });
+
+    return Promise.all(productList).then((res) => {
+      return { res, total: total.toString() + ",00€", pLength: res.length };
+    });
   } catch (err) {
     console.log(err);
     throw err;
