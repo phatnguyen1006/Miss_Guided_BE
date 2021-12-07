@@ -111,7 +111,6 @@ async function removeFromCart(email, productId) {
   try {
     const user = await Users.findOne({ email: email }).lean();
     let cart = user.cart.filter((c) => c == productId);
-    console.log(cart);
 
     if (user) {
       var result = await Users.findOneAndUpdate(
