@@ -90,6 +90,13 @@ module.exports.filters = async (req, res, next) => {
     next();
   }
 
+  if (req.query.sizes) {
+    req.query.sizes = { $in: req.query.sizes };
+  }
+  if (req.query.categories) {
+    req.query.categories = { $in: req.query.categories };
+  }
+
   const result = await Products.filterByAttributes(page, req.query);
 
   if (!result) {
