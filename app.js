@@ -23,12 +23,13 @@ app.set("views", path.join(__dirname, "./views")); // view
 
 // Functions
 const clearFunction = require("./functions/clearFaultProduct");
+const fetchAllCategories = require("./functions/fetchAllCategories");
 
 // Routes
 const authenticationRoute = require("./routes/authentication.route");
 const productRoute = require("./routes/product.route");
 const userRoute = require("./routes/user.route");
-const wishlistRoute = require('./routes/wishlist.route');
+const wishlistRoute = require("./routes/wishlist.route");
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -46,6 +47,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/pipe", pipeRoute);
+app.get("/categories", fetchAllCategories);
 // app.get("/clear", clearFunction);
 
 app.get("/", (req, res, next) => {
@@ -55,7 +57,7 @@ app.get("/", (req, res, next) => {
 app.use("/me", authenticationRoute);
 app.use("/product", productRoute);
 app.use("/user", userRoute);
-app.use('/wishlist', wishlistRoute);
+app.use("/wishlist", wishlistRoute);
 
 app.listen(PORT, () => {
   console.log(`Application is running on port ${PORT}`);

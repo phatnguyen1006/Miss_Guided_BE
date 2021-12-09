@@ -26,7 +26,7 @@ const fetchAllCategories = async (req, res) => {
     console.log("aa", categories);
 
     if (result) {
-      res.status(200).json({ Products: categories });
+      res.status(200).json({ categories: categories });
     }
   } catch (err) {
     throw err;
