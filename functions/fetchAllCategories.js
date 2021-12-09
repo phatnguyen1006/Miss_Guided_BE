@@ -10,15 +10,18 @@ const Products = require("../models/product.model");
 const fetchAllCategories = async (req, res) => {
   try {
     let categories = [];
+    let sizes = [];
     let perPage = 50;
 
     const result = await Products.find({
       categories: { $gt: [] },
+      sizes: { $gt: [] },
     })
       .limit(perPage)
       .then((res) => {
         res.forEach((r) => {
           categories.push(r.categories);
+          sizes.push(r.sizes);
         });
         return categories;
       });
@@ -26,7 +29,7 @@ const fetchAllCategories = async (req, res) => {
     console.log("aa", categories);
 
     if (result) {
-      res.status(200).json({ categories: categories });
+      res.status(200).json({ categories: categories, sizes: sizes });
     }
   } catch (err) {
     throw err;
