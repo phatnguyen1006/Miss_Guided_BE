@@ -1,4 +1,6 @@
 const Products = require("../services/product.service");
+const convertPrice = require("../helper/converPrice");
+const sortEnum = require("../interface/sortEnum");
 
 module.exports.getAllProducts = async (req, res) => {
   const allProducts = await Products.findAllProducts();
@@ -56,7 +58,6 @@ module.exports.getPaginationSwipe = async (req, res) => {
   }
 };
 
-
 module.exports.searchProduct = async (req, res) => {
   const { q, page } = req.query;
   //console.log(q);
@@ -82,7 +83,7 @@ module.exports.searchProduct = async (req, res) => {
 };
 
 module.exports.filters = async (req, res, next) => {
-  //   const { q } = req.query;
+  // const { q } = req.query;
   const page = req.params.page;
 
   if (!req.query) {
@@ -97,7 +98,37 @@ module.exports.filters = async (req, res, next) => {
     });
   }
 
-  return res.status(200).json({
-    products: result,
-  });
+  if (result && req.query.sort) {
+    if (req.query.sort == sortEnum[0]) {
+      // Do nothing
+      return res.status(200).json({
+        products: result,
+      });
+    } else if (req.query.sort == sortEnum[1]) {
+      // low to high
+
+      result.sort((a, b) => convertPrice(a.price) - convertPrice(b.price));
+
+      return res.status(200).json({
+        products: result,
+      });
+    } else if (req.query.sort == sortEnum[2]) {
+      // high to low
+      result.sort((a, b) => convertPrice(b.price) - convertPrice(a.price));
+
+      return res.status(200).json({
+        products: result,
+      });
+    } else {
+      // Do nothing
+      return res.status(200).json({
+        products: result,
+      });
+    }
+  } else {
+    // Do nothing
+    return res.status(200).json({
+      products: result,
+    });
+  }
 };
